@@ -1,0 +1,87 @@
+.users-details {
+    max-width: 900px;
+    width: 100%;
+    margin: 50px auto;
+
+}
+
+body {
+    font-family: "cairo", "sans-serif";
+}
+
+a {
+    text-decoration: none;
+}
+
+.users-details .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.users-details .head p {
+    font-size: 32px;
+}
+
+.users-details .head a {
+    background-color: #4d9a51;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 2px;
+}
+
+.users-details .content {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #ccc;
+
+}
+
+.users-details .content .content-head,
+.users-details .content .content-body .user {
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.users-details .content .content-head {
+    font-weight: 700;
+}
+
+.users-details .content .content-body .user {
+    border-top: 2px solid #ccc;
+}
+
+.users-details .content .content-body .user.bg-light {
+    background-color: #eee;
+}
+
+.users-details .content .content-head span:not(:last-child),
+.users-details .content .content-body .user span:not(:last-child) {
+    padding: 10px 0;
+    border-right: 2px solid #ccc;
+}
+
+.flex1 {
+    flex: 1;
+}
+
+.flex2 {
+    flex: 2;
+}
+
+.flex3 {
+    flex: 3;
+}
+
+.action-btns {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.action-btns > * {
+    display: flex;
+    cursor: pointer;
+    color: dodgerblue;
+}

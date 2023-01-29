@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "cairo", "sans-serif";
+}
+
+.post {
+    max-width: 500px;
+    width: 100%;
+    margin: 100px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.post-info,
+.post-creator-info {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.post-info > *,
+.post-creator-info > * {
+    padding: 10px 20px;
+}
+
+.post-info .head,
+.post-creator-info .head {
+    background-color: #ccc;
+}
+
+.back-to-usersdata-btn {
+    text-decoration: none;
+    padding: 6px 20px;
+    background-color: dodgerblue;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
