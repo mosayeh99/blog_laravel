@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -23,8 +24,9 @@ class PostController extends Controller
         return view('posts.create', compact('users'));
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
+//        return $request;
         Post::create($request->all());
         return redirect()->route('posts.index');
     }
@@ -51,9 +53,8 @@ class PostController extends Controller
         return view('posts.edit', compact('post','users'));
     }
 
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-//        return $request;
         Post::findorfail($id)->update($request->all());
         return redirect()->route('posts.index');
     }

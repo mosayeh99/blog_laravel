@@ -1,9 +1,9 @@
-@extends('layouts.nav')
+@extends('layouts.app')
 @section('title', 'Update Post')
 @section('csspath')
     <link rel="stylesheet" href="{{asset('css/create.css')}}">
 @endsection
-@section('page-content')
+@section('content')
 
     <h1>Update Post</h1>
     <form action="{{route('posts.update', $post->id)}}" method="post">
@@ -11,11 +11,17 @@
         @csrf
         <div class="name">
             <p>Title<span class="required">*</span></p>
-            <input type="text" name="title" value="{{$post->title}}">
+            <input type="text" name="title" value="{{$post->title}}" class="@error('title') is-invalid @enderror">
+            @error('title')
+            <div class="validate-error-msg">{{ $message }}</div>
+            @enderror
         </div>
         <div class="email">
             <p>Description<span class="required">*</span></p>
-            <textarea name="description">{{$post->description}}</textarea>
+            <textarea name="description" class="@error('description') is-invalid @enderror">{{$post->description}}</textarea>
+            @error('description')
+            <div class="validate-error-msg">{{ $message }}</div>
+            @enderror
         </div>
         <div class="crated-at">
             <p>Posted by<span class="required">*</span></p>

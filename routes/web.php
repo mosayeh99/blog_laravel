@@ -14,9 +14,8 @@ use App\Http\Controllers\PostController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::controller(PostController::class)->group(function () {
-    Route::get('/posts', 'index')->name(name: 'posts.index');
+Route::middleware('auth')->controller(PostController::class)->group(function () {
+    Route::get('/', 'index')->name(name: 'posts.index');
     Route::get('/posts/create', 'create')->name(name: 'posts.create');
     Route::post('/posts/store', 'store')->name('posts.store');
     Route::get('/posts/{id}', 'show')->name(name: 'posts.show');
@@ -33,3 +32,7 @@ Route::get('/posts/deleted/ajax/{id}',[AjaxController::class,'show_deleted'])->n
 
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

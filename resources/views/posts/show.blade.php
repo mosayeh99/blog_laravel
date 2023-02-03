@@ -1,10 +1,10 @@
-@extends('layouts.nav')
+@extends('layouts.app')
 @section('title', 'Preview Post')
 @section('csspath')
     <link rel="stylesheet" href="{{asset('css/show.css')}}">
     <livewire:styles />
 @endsection
-@section('page-content')
+@section('content')
 
     <div class="post">
         <div class="post-info">

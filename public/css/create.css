@@ -97,3 +97,7 @@ form select {
     color: white;
     border-radius: 5px;
 }
+
+.validate-error-msg {
+    color: red;
+}
