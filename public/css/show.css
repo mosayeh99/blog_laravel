@@ -11,14 +11,15 @@ body {
 .post {
     max-width: 500px;
     width: 100%;
-    margin: 100px auto;
+    margin: 50px auto;
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
 .post-info,
-.post-creator-info {
+.post-creator-info,
+.post-comments {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
@@ -29,16 +30,62 @@ body {
 }
 
 .post-info .head,
-.post-creator-info .head {
+.post-creator-info .head,
+.post-comments .head {
     background-color: #ccc;
+    padding: 10px 20px;
 }
 
-.back-to-usersdata-btn {
+.post-comments .comment {
+    display: flex;
+    gap: 15px;
+    margin: 20px;
+}
+
+.post-comments .comment-avatar {
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    color: #777;
+}
+
+.post-comments .comment-info {
+    flex: 1;
+}
+
+.post-comments .comment-info .comment-body {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 6px 10px 10px;
+}
+
+.post-comments .comment-info .comment-created-at {
+    font-size: 14px;
+    color: #777;
+    padding-left: 10px;
+}
+
+form.add-comments textarea {
+    width: 100%;
+    resize: none;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    caret-color: #777;
+}
+
+form.add-comments input[type="submit"] {
     text-decoration: none;
-    padding: 6px 20px;
     background-color: dodgerblue;
     border-radius: 5px;
     color: white;
     font-size: 16px;
-    text-align: center;
+    border: 0;
+    padding: 12px 10px;
 }

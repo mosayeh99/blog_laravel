@@ -2,59 +2,83 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $allposts = [
-            [
-                "id" => 1,
-                "title" => 'PHP',
-                "posted-by" => 'Mohamed',
-                "created-at" => '28/1/2023'
-            ],
-            [
-                "id" => 2,
-                "title" => 'Laravel',
-                "posted-by" => 'Elsayeh',
-                "created-at" => '28/1/2023'
-            ],
-            [
-                "id" => 3,
-                "title" => 'Node',
-                "posted-by" => 'Abd Elzaher',
-                "created-at" => '28/1/2023'
-            ]
-        ];
-        return view('posts.index', [
-            'posts' => $allposts
-        ]);
+        $posts = Post::paginate(10);
+        $deleted_posts = Post::onlyTrashed()->get();
+        return view('posts.index', compact('posts', 'deleted_posts'));
     }
 
     public function create()
     {
-        return view('posts.create');
+        $users = User::all();
+        return view('posts.create', compact('users'));
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        return redirect('/posts');
+        Post::create($request->all());
+        return redirect()->route('posts.index');
     }
+
+//    public function store_comment(Request $request)
+//    {
+//        Comment::create($request->all());
+//        return redirect()->back();
+//    }
 
     public function show($id)
     {
-        return view('posts.show');
+        $post = Post::findorfail($id);
+//        $comments = Comment::where('post_id',$id)->get();
+        return view('posts.show', compact('post',
+//            'comments'
+        ));
     }
 
     public function edit($id)
     {
-        return view('posts.edit');
+        $post = Post::findorfail($id);
+        $users = User::all();
+        return view('posts.edit', compact('post','users'));
     }
 
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        return redirect('/posts');
+//        return $request;
+        Post::findorfail($id)->update($request->all());
+        return redirect()->route('posts.index');
+    }
+
+    public function destroy($id)
+    {
+        Post::destroy($id);
+        return redirect()->route('posts.index');
+    }
+
+    public function restore($id)
+    {
+        Post::withTrashed()->where('id', $id)->restore();
+        return redirect()->route('posts.index');
+    }
+
+    public function forceDelete($id)
+    {
+        Post::withTrashed()->where('id', $id)->forceDelete();
+        return redirect()->route('posts.index');
+    }
+
+    public function showDeletedPost($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        return view('posts.show', compact('post'));
     }
 }

@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="/css/nav.css">
-    @section('csspath')
-
-    @show
+    @yield('csspath')
 </head>
 <body>
     <header>
@@ -16,5 +14,6 @@
         <a href="{{route('posts.index')}}">All Posts</a>
     </header>
     @yield('page-content')
+    @yield('scripts')
 </body>
 </html>

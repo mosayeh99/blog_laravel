@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -14,9 +15,21 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/posts', [PostController::class, 'index'])->name(name: 'posts.index');
-Route::get('/posts/create', [PostController::class, 'create'])->name(name: 'posts.create');
-Route::post('/posts/store', [PostController::class, 'store']);
-Route::get('/posts/{id}', [PostController::class, 'show'])->name(name: 'posts.show');
-Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->name(name: 'posts.edit');
-Route::put('/posts/{id}', [PostController::class, 'update']);
+Route::controller(PostController::class)->group(function () {
+    Route::get('/posts', 'index')->name(name: 'posts.index');
+    Route::get('/posts/create', 'create')->name(name: 'posts.create');
+    Route::post('/posts/store', 'store')->name('posts.store');
+    Route::get('/posts/{id}', 'show')->name(name: 'posts.show');
+    Route::get('/posts/{id}/edit', 'edit')->name(name: 'posts.edit');
+    Route::put('/posts/{id}', 'update')->name(name: 'posts.update');
+    Route::DELETE('/posts/{id}','destroy')->name('posts.destroy');
+    Route::get('/posts/restore/{id}', 'restore')->name('posts.restore');
+    Route::get('posts/forcedelete/{id}', 'forceDelete')->name('posts.force.delete');
+    Route::get('/posts/showdeletedpost/{id}','showDeletedPost')->name('posts.show.deleted');
+});
+
+Route::get('/posts/ajax/{id}',[AjaxController::class,'show'])->name('posts.show.model');
+Route::get('/posts/deleted/ajax/{id}',[AjaxController::class,'show_deleted'])->name('deleted.posts.show.model');
+
+
+

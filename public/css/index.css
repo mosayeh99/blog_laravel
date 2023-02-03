@@ -29,13 +29,14 @@ a {
     padding: 10px 15px;
     color: white;
     border-radius: 2px;
+    text-decoration: none;
 }
 
 .users-details .content {
     display: flex;
     flex-direction: column;
     border: 2px solid #ccc;
-
+    margin-bottom: 30px;
 }
 
 .users-details .content .content-head,
@@ -55,6 +56,14 @@ a {
 
 .users-details .content .content-body .user.bg-light {
     background-color: #eee;
+}
+
+.users-details .content .content-body .user.bg-deleted1 {
+    background-color: #f46d75;
+}
+
+.users-details .content .content-body .user.bg-deleted2 {
+    background-color: #f7b4bb;
 }
 
 .users-details .content .content-head span:not(:last-child),
@@ -80,8 +89,20 @@ a {
     justify-content: space-evenly;
 }
 
-.action-btns > * {
+.action-btns > a {
     display: flex;
     cursor: pointer;
+    color: dodgerblue !important;
+}
+
+.user.bg-deleted1 .action-btns > *,
+.user.bg-deleted2 .action-btns > *{
+    color: black !important;
+}
+
+.soft-delete-btn {
+    background-color: transparent;
+    border: none;
     color: dodgerblue;
+    cursor: pointer;
 }
