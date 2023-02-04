@@ -6,7 +6,7 @@
 @section('content')
 
     <h1>Update Post</h1>
-    <form action="{{route('posts.update', $post->id)}}" method="post">
+    <form action="{{route('posts.update', $post->id)}}" method="post" enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <div class="name">
@@ -35,7 +35,19 @@
                 @endforeach
             </select>
         </div>
-        <input type="submit" value="Update" class="update-post-btn">
+        <div class="d-flex justify-content-center">
+            <img src="{{asset('storage/posts_imgs/'.$post->image)}}" alt="Post Image" width="100px">
+        </div>
+        <div>
+            <input type="file" name="image" class="@error('image') is-invalid @enderror">
+            @error('image')
+            <div class="validate-error-msg">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+            <a href="/" class="btn btn-outline-secondary d-flex lh-lg">Cancel</a>
+            <input type="submit" value="Update" class="update-post-btn">
+        </div>
 </form>
 
 @endsection

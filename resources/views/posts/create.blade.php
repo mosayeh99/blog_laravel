@@ -6,7 +6,7 @@
 @section('content')
 
     <h1>Add New Post</h1>
-    <form method="POST" action="{{route('posts.store')}}">
+    <form method="POST" action="{{route('posts.store')}}" enctype="multipart/form-data">
         @csrf
         <div class="name">
             <p>Title<span class="required">*</span></p>
@@ -29,6 +29,12 @@
                 <option value="{{$user->id}}" name="user_id">{{$user->name}}</option>
                 @endforeach
             </select>
+        </div>
+        <div>
+            <input type="file" name="image" class="@error('image') is-invalid @enderror">
+            @error('image')
+            <div class="validate-error-msg">{{ $message }}</div>
+            @enderror
         </div>
         <input type="submit">
 </form>

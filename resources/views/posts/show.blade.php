@@ -7,6 +7,9 @@
 @section('content')
 
     <div class="post">
+        <div class="d-flex justify-content-center">
+            <img src="{{asset('storage/posts_imgs/'.$post->image)}}" alt="Post Image" width="200px">
+        </div>
         <div class="post-info">
             <p class="head">Post Info</p>
             <div class="title">

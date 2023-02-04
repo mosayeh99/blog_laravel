@@ -15,11 +15,12 @@
                 <span class="flex1">#</span>
                 <span class="flex2">Title</span>
                 <span class="flex2">Posted By</span>
+                <span class="flex2">Title Slug</span>
                 <span class="flex2">Created At</span>
                 <span class="flex3">Action</span>
             </div>
             <div class="content-body">
-                <?php $usercounter = 0 ?>
+                <?php $usercounter = 1 ?>
                 @foreach ($posts as $post)
                     <?php $usercounter++ ?>
                     @if($usercounter % 2 == 0)
@@ -27,10 +28,11 @@
                     @else
                         <div class="user">
                     @endif
-                    <span class="flex1">{{$usercounter}}</span>
+                    <span class="flex1">{{$usercounter - 1}}</span>
                     <span class="flex2">{{$post->title}}</span>
                     <span class="flex2">{{$post->user->name}}</span>
-                    <span class="flex2">{{\Carbon\Carbon::parse($post->created_at)->format('Y-m-d')}}</span>
+                    <span class="flex2">{{$post->slug}}</span>
+                    <span class="flex2">{{$post->created_at->format('Y-m-d')}}</span>
                     <span class="flex3 action-btns">
                         <a href="{{route('posts.show', $post->id)}}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -81,9 +83,10 @@
                             @else
                                 <div class="user bg-deleted2">
                             @endif
-                                <span class="flex1">{{$usercounter}}</span>
+                                <span class="flex1">{{$usercounter - 1}}</span>
                                 <span class="flex2">{{$deleted_post->title}}</span>
                                 <span class="flex2">{{$deleted_post->user->name}}</span>
+                                <span class="flex2">{{$deleted_post->slug}}</span>
                                 <span class="flex2">{{\Carbon\Carbon::parse($deleted_post->created_at)->format('Y-m-d')}}</span>
                                 <span class="flex3 action-btns">
                         <a href="{{route('posts.show.deleted', $deleted_post->id)}}">

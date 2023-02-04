@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Http\Requests\StorePostRequest;
+use App\Jobs\PruneOldPostsJop;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use Faker\Provider\File;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class PostController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
+//        PruneOldPostsJop::dispatch();
         $posts = Post::paginate(10);
         $deleted_posts = Post::onlyTrashed()->get();
         return view('posts.index', compact('posts', 'deleted_posts'));
@@ -24,10 +31,16 @@ class PostController extends Controller
         return view('posts.create', compact('users'));
     }
 
-    public function store(PostRequest $request)
+    public function store(StorePostRequest $request)
     {
-//        return $request;
-        Post::create($request->all());
+        $image_name = $request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('posts_imgs',$image_name,'postImgs');
+        Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+            'image' => $image_name
+        ]);
         return redirect()->route('posts.index');
     }
 
@@ -53,9 +66,16 @@ class PostController extends Controller
         return view('posts.edit', compact('post','users'));
     }
 
-    public function update(PostRequest $request, $id)
+    public function update(StorePostRequest $request, $id)
     {
-        Post::findorfail($id)->update($request->all());
+        $image_name = $request->file('image')->getClientOriginalName();
+        $path = $request->file('image')->storeAs('posts_imgs',$image_name,'postImgs');
+        Post::findorfail($id)->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+            'image' => $image_name
+        ]);
         return redirect()->route('posts.index');
     }
 
@@ -73,7 +93,9 @@ class PostController extends Controller
 
     public function forceDelete($id)
     {
-        Post::withTrashed()->where('id', $id)->forceDelete();
+        $post = Post::withTrashed()->where('id', $id)->first();
+        Storage::disk('postImgs')->delete('posts_imgs/'.$post->image);
+        $post->forceDelete();
         return redirect()->route('posts.index');
     }
 
