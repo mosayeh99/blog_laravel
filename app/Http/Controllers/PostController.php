@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostRequest;
 use App\Http\Requests\StorePostRequest;
 use App\Jobs\PruneOldPostsJop;
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\User;
 use Faker\Provider\File;
 use Illuminate\Http\Request;
@@ -35,47 +35,50 @@ class PostController extends Controller
     {
         $image_name = $request->file('image')->getClientOriginalName();
         $path = $request->file('image')->storeAs('posts_imgs',$image_name,'postImgs');
-        Post::create([
+        $post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id,
             'image' => $image_name
         ]);
+        if ($request->tags !== null){
+            $tags = explode(',', $request->tags);
+            $post->attachTags($tags);
+        }
         return redirect()->route('posts.index');
     }
-
-//    public function store_comment(Request $request)
-//    {
-//        Comment::create($request->all());
-//        return redirect()->back();
-//    }
 
     public function show($id)
     {
         $post = Post::findorfail($id);
-//        $comments = Comment::where('post_id',$id)->get();
-        return view('posts.show', compact('post',
-//            'comments'
-        ));
+        $tags = $post->tags->pluck('name');
+        return view('posts.show', compact('post','tags'));
     }
 
     public function edit($id)
     {
         $post = Post::findorfail($id);
+        $tags = $post->tags->pluck('name');
+        $tags = implode(',',$tags->toArray());
         $users = User::all();
-        return view('posts.edit', compact('post','users'));
+        return view('posts.edit', compact('post','users','tags'));
     }
 
     public function update(StorePostRequest $request, $id)
     {
         $image_name = $request->file('image')->getClientOriginalName();
         $path = $request->file('image')->storeAs('posts_imgs',$image_name,'postImgs');
-        Post::findorfail($id)->update([
+        $post = Post::findorfail($id);
+        $post->update([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id,
             'image' => $image_name
         ]);
+        if ($request->tags !== null) {
+            $tags = explode(',', $request->tags);
+            $post->attachTags($tags);
+        }
         return redirect()->route('posts.index');
     }
 

@@ -23,21 +23,24 @@ p {
 
 .post-info,
 .post-creator-info,
-.post-comments {
+.post-comments,
+.post-tags {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
 .post-info > *,
-.post-creator-info > * {
+.post-creator-info > *{
     padding: 10px 20px;
 }
 
 .post-info .head,
 .post-creator-info .head,
-.post-comments .head {
+.post-comments .head,
+.post-tags .head {
     background-color: #ccc;
     padding: 10px 20px;
+    font-weight: bold;
 }
 
 .post-comments .comment {

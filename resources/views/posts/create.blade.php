@@ -31,6 +31,10 @@
             </select>
         </div>
         <div>
+            <p>Tags</p>
+            <input type="text" name="tags">
+        </div>
+        <div>
             <input type="file" name="image" class="@error('image') is-invalid @enderror">
             @error('image')
             <div class="validate-error-msg">{{ $message }}</div>

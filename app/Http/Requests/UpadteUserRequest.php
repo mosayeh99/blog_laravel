@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StorePostRequest extends FormRequest
+class UpadteUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class StorePostRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -25,13 +25,16 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => [
+            'name' => [
                 'required',
-                'min:3',
-                Rule::unique('posts','title')->ignore($this->id)
+                Rule::unique('users','name')->ignore($this->id)
             ],
-            'description' => 'required|min:10',
-            'image' => 'mimes:png,jpg'
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users','email')->ignore($this->id)
+            ],
+            'password' => 'required'|'min:8'
         ];
     }
 }

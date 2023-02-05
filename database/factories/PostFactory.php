@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Cviebrock\EloquentSluggable\Tests\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,9 +18,9 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'title' => fake()->sentence(1,true),
+            'title' => fake()->sentence(2,true),
             'description' => fake()->text(),
-            'user_id' => fake()->randomElement([1,2])
+            'user_id' => fake()->randomElement([1,2,3])
         ];
     }
 }

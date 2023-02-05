@@ -36,6 +36,16 @@
                 <span>{{$post->user->created_at}}</span>
             </div>
         </div>
+        @if(!empty($tags->toArray()))
+        <div class="post-tags">
+            <p class="head">Post Tags</p>
+            <div class="p-3">
+            @foreach($tags as $tag)
+                <span class="bg-opacity-25 bg-secondary px-2 py-1">{{$tag}}</span>
+            @endforeach
+            </div>
+        </div>
+        @endif
         <livewire:show-comments/>
 {{--        <div class="post-comments">--}}
 {{--            <p class="head">Comments</p>--}}

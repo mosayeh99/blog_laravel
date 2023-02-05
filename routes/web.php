@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -30,9 +31,22 @@ Route::middleware('auth')->controller(PostController::class)->group(function () 
 Route::get('/posts/ajax/{id}',[AjaxController::class,'show'])->name('posts.show.model');
 Route::get('/posts/deleted/ajax/{id}',[AjaxController::class,'show_deleted'])->name('deleted.posts.show.model');
 
-
-
-
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/users/{id}/edit',[UserController::class,'edit'])->name('users.edit');
+Route::PUT('/users/{id}',[UserController::class,'update'])->name('users.update');
+
+
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/auth/redirect', function () {
+    return Socialite::driver('github')->redirect();
+});
+
+Route::get('/auth/callback', function () {
+    $user = Socialite::driver('github')->user();
+
+    // $user->token
+});

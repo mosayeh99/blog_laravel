@@ -35,6 +35,10 @@
                 @endforeach
             </select>
         </div>
+        <div>
+            <p>Tags</p>
+            <input type="text" name="tags" value="{{$tags}}">
+        </div>
         <div class="d-flex justify-content-center">
             <img src="{{asset('storage/posts_imgs/'.$post->image)}}" alt="Post Image" width="100px">
         </div>
