@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -41,12 +43,44 @@ Route::PUT('/users/{id}',[UserController::class,'update'])->name('users.update')
 
 use Laravel\Socialite\Facades\Socialite;
 
-Route::get('/auth/redirect', function () {
+Route::get('/auth/redirect/github', function () {
     return Socialite::driver('github')->redirect();
 });
 
-Route::get('/auth/callback', function () {
-    $user = Socialite::driver('github')->user();
+Route::get('/auth/callback/github', function () {
+    $githubUser = Socialite::driver('github')->user();
 
-    // $user->token
+    $user = User::updateOrCreate([
+        'github_id' => $githubUser->id,
+    ], [
+        'name' => $githubUser->name,
+        'email' => $githubUser->email,
+        'github_token' => $githubUser->token,
+        'github_refresh_token' => $githubUser->refreshToken,
+    ]);
+
+    Auth::login($user);
+
+    return redirect()->route('posts.index');
+});
+
+Route::get('/auth/redirect/google', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/callback/google', function () {
+    $githubUser = Socialite::driver('google')->user();
+
+    $user = User::updateOrCreate([
+        'google_id' => $githubUser->id,
+    ], [
+        'name' => $githubUser->name,
+        'email' => $githubUser->email,
+        'google_token' => $githubUser->token,
+        'google_refresh_token' => $githubUser->refreshToken,
+    ]);
+
+    Auth::login($user);
+
+    return redirect()->route('posts.index');
 });
