@@ -14,7 +14,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = Post::with('user')->paginate(5);
         return PostResource::collection($posts);
     }
 
