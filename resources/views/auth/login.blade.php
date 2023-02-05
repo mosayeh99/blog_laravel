@@ -64,6 +64,12 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="row">
+                            <a href="{{route('login.google')}}" class="border border-2 fs-5 m-auto mt-3 p-2 text-center text-decoration-none w-25">Login With Google</a>
+                        </div>
+                        <div class="row">
+                            <a href="{{route('login.github')}}" class="border border-2 fs-5 m-auto mt-3 p-2 text-center text-decoration-none w-25">Login With GitHub</a>
+                        </div>
                     </form>
                 </div>
             </div>
