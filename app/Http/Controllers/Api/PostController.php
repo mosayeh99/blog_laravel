@@ -15,8 +15,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::paginate(5);
-        $users = User::all();
-//        return UserResource::collection($users);
         return PostResource::collection($posts);
     }
 
